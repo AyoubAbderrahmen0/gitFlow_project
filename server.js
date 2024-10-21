@@ -1,6 +1,6 @@
 //require express !
-const  express = require ('express');
-const connect = require("./config/config")
+const  express = require('express');
+const connect = require("./connectDB/config")
 
 //create instance
 const app=express()
@@ -8,12 +8,10 @@ const app=express()
 //middleWare
 app.use(express.json())
 
-//create PORT
-const PORT=8000
-
+require('dotenv').config()
+const PORT = process.env.PORT
 //create server
 app.listen(PORT,(error)=>{
-    error?console.log(error):console.log(`the server is running on port ${PORT}`)
+    error?console.log(error):console.log(`server is running on PORT ${PORT}`)
 })
-
 connect()
