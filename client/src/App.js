@@ -1,13 +1,20 @@
+import React from 'react';
+import Register from './pages/Register';
+import Login from './pages/Login';
 
-import './App.css';
-import NavBar from './Compoments/NavBar';
 
 function App() {
+
   return (
    
-      <NavBar/>
+      
       
    
+    <div >
+      <NavBar/>
+      <Login />
+      <Register />
+    </div>
   );
 }
 
