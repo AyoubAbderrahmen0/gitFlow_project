@@ -7,6 +7,10 @@ const app=express()
 
 //middleWare
 app.use(express.json())
+const cors=require("cors"); //access to send requests
+const corsOptions ={ origin:'*', credentials:true, //access-control-allow-credentials:true
+ optionSuccessStatus:200, } 
+ app.use(cors(corsOptions))
 
 require('dotenv').config()
 const PORT = process.env.PORT
