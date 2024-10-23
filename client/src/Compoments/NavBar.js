@@ -43,6 +43,8 @@ const NavBar = () => {
           <Button variant="outline-success">Search</Button>
           <Link to={"/register"} className="ms-1"><Button variant="outline-success">Register</Button></Link>
           <Link to={"/login"} className="ms-1"><Button variant="outline-success">Login</Button></Link>
+          <Link to={"/error"} className="ms-1"><Button variant="outline-success">error</Button></Link>
+          <Link to={"/Profil"} className="ms-1"><Button variant="outline-success">Profil</Button></Link>
         </Form>
       </Navbar.Collapse>
     </Container>

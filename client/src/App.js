@@ -3,6 +3,8 @@ import Register from './pages/Register';
 import Login from './pages/Login';
 import { Link, Route, Routes } from 'react-router-dom';
 import NavBar from './Compoments/NavBar';
+import Error from './pages/Error';
+import Profil from './Compoments/Profil';
 
 
 function App() {
@@ -16,6 +18,8 @@ function App() {
       <Routes>
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
+        <Route path='/error' element={<Error />} />
+        <Route path='/Profil' element={<Profil/>} />
       </Routes>
     </div>
   );
