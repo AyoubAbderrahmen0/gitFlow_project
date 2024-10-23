@@ -19,3 +19,5 @@ app.listen(PORT,(error)=>{
     error?console.log(error):console.log(`server is running on PORT ${PORT}`)
 })
 connect()
+app.use("/api/user",require("./Routes/User"))  
+
