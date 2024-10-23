@@ -7,6 +7,7 @@ import Form from 'react-bootstrap/Form';
 import FormControl from 'react-bootstrap/FormControl';
 import Button from 'react-bootstrap/Button';
 import { FaGamepad } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 const NavBar = () => {
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
@@ -40,6 +41,8 @@ const NavBar = () => {
             aria-label="Search"
           />
           <Button variant="outline-success">Search</Button>
+          <Link to={"/register"} className="ms-1"><Button variant="outline-success">Register</Button></Link>
+          <Link to={"/login"} className="ms-1"><Button variant="outline-success">Login</Button></Link>
         </Form>
       </Navbar.Collapse>
     </Container>
