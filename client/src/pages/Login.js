@@ -1,11 +1,30 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Card, Container, Form, InputGroup } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { loginUser } from '../redux/Actions/UserActions';
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const user = useSelector(state => state.UserReducer.user);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleClick = () => {
+    dispatch(loginUser(email, password)); //call function
+  };
+
+  useEffect(() => {
+    if (user) {
+      navigate("/Profil");
+    }
+  }, [user, navigate]);
+
 
   const appStyle = {
-    backgroundImage: `url('https://files.meiobit.com/wp-content/uploads/2022/08/minecraft-1060x596.jpg')`,
+    backgroundImage: `url('https://marketplace.canva.com/EAD_IsMYK_w/1/0/1600w/canva-arri%C3%A8re-plan-virtuel-arc-en-ciel-d%C3%A9grad%C3%A9-rose-orange-et-bleu-VwJMC37j5jQ.jpg')`,
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     minHeight: '100vh',
@@ -28,6 +47,7 @@ const Login = () => {
                     type="email"
                     placeholder="Enter your email"
                     aria-label="Email"
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                 </InputGroup>
               </Form.Group>
@@ -39,6 +59,7 @@ const Login = () => {
                     type={showPassword ? 'text' : 'password'}
                     placeholder="Enter your password"
                     aria-label="Password"
+                    onChange={(e) => setPassword(e.target.value)}
                   />
                   <Button
                     variant="outline-secondary"
@@ -49,11 +70,11 @@ const Login = () => {
                 </InputGroup>
               </Form.Group>
 
-              <Button variant="primary" type="submit" className="w-100">
+              <Button variant="primary" className="w-100" onClick={handleClick}>
                 Login
               </Button>
               <div className="text-center mt-3">
-                <a href="#">Forget my password!</a>
+              <Link to={"/"}>Forget my password!</Link>
               </div>
             </Form>
           </Card.Body>
