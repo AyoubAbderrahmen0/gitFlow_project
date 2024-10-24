@@ -1,11 +1,12 @@
-const User = require('../Models/User');
+const user = require("../Models/user");
 const bcrypt = require('bcrypt');
+const jwt = require("jsonwebtoken");
 
 exports.register = async (req, res) => {
   try {
     const { userName, email, password, age, phone } = req.body;
 
-    const existingUser = await User.findOne({ email });
+    const existingUser = await user.findOne({ email });
     if (existingUser) {
       return res.status(400).send({ msg: "Email already exists!" });
     }
@@ -13,7 +14,7 @@ exports.register = async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    const newUser = new User({ userName, email, password: hashedPassword, age, phone });
+    const newUser = new user({ userName, email, password: hashedPassword, age, phone });
     await newUser.save();
 
     res.status(200).send({ msg: "User registered successfully!", newUser });
@@ -25,21 +26,22 @@ exports.register = async (req, res) => {
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
+    const foundUser = await user.find({ email });
 
-    const user = await User.findOne({ email });
-    if (!user) {
+    if (!foundUser[0]) {
       return res.status(400).send({ msg: "Email or password invalid!" });
+    } else {
+      const checkedPassword = await bcrypt.compare(password, foundUser[0].password);
+      if (!checkedPassword) {
+        return res.status(400).send({ msg: "Email or password invalid!" });
+      } else {
+        const token = jwt.sign({ _id: foundUser[0]._id }, process.env.SECRET_KEY, { expiresIn: "1h" });
+        return res.status(200).send({ msg: "Login successfully", foundUser, token });
+      }
     }
-
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) {
-      return res.status(400).send({ msg: "Email or password invalid!" });
-    }
-
-    res.status(200).send({ msg: "Login successful", user });
   } catch (error) {
-    res.status(500).send({ msg: "Error on login", error });
-  }
+    res.status(500).send({ msg: "Error on login", error });
+  }
 };
 
 // Suppression d'un utilisateur
