@@ -28,7 +28,7 @@ const Register = () => {
   }, [user, navigate]);
 
   const appStyle = {
-    backgroundImage: `url('https://files.meiobit.com/wp-content/uploads/2022/08/minecraft-1060x596.jpg')`,
+    backgroundImage: `url('https://marketplace.canva.com/EAD_IsMYK_w/1/0/1600w/canva-arri%C3%A8re-plan-virtuel-arc-en-ciel-d%C3%A9grad%C3%A9-rose-orange-et-bleu-VwJMC37j5jQ.jpg')`,
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     minHeight: '100vh',
