@@ -42,4 +42,39 @@ exports.login = async (req, res) => {
   }
 };
 
+// Suppression d'un utilisateur
+exports.deleteUser = async (req, res) => {
+  try {
+    const { _id } = req.params;
+
+    await User.deleteOne({ _id });
+
+    res.status(200).send({ msg: "User deleted successfully!" });
+  } catch (error) {
+    res.status(500).send({ msg: "Error deleting user", error });
+  }
+};
+
+// Réinitialisation du mot de passe
+exports.resetPassword = async (req, res) => {
+  try {
+    const { _id } = req.params;
+    const { newPassword } = req.body;
+
+    if (!newPassword) {
+      return res.status(400).send({ msg: "New password is required!" });
+    }
+
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(newPassword, saltRounds);
+
+    await User.updateOne({ _id }, { $set: { password: hashedPassword } });
+
+    res.status(200).send({ msg: "Password updated successfully!" });
+  } catch (error) {
+    res.status(500).send({ msg: "Error on updating password", error });
+  }
+};
+
+
 
