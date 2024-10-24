@@ -1,9 +1,31 @@
 import { Button, Card, Container, Form, InputGroup } from 'react-bootstrap';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector} from 'react-redux';
+import { registerUser } from '../redux/Actions/UserActions';
+import { useNavigate } from 'react-router-dom';
+
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [userName, setUserName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [age, setAge] = useState(0);
+  const [phone, setPhone] = useState("");
+
+  const user = useSelector(state => state.UserReducer.user);
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const handleClick = async () => {
+    await dispatch(registerUser({ userName: userName, email:email, password:password, age:age, phone:phone }));
+  };
+
+  useEffect(() => {
+    if (user) {
+      navigate("/Profile");
+    }
+  }, [user, navigate]);
 
   const appStyle = {
     backgroundImage: `url('https://files.meiobit.com/wp-content/uploads/2022/08/minecraft-1060x596.jpg')`,
@@ -14,6 +36,7 @@ const Register = () => {
     justifyContent: 'center',
     alignItems: 'center',
   };
+  
 
   return (
     <div className="App" style={appStyle}>
@@ -28,6 +51,7 @@ const Register = () => {
                   type="text"
                   placeholder="Enter your username"
                   aria-label="Username"
+                  onChange={(e) => setUserName(e.target.value)}
                 />
               </InputGroup>
 
@@ -37,6 +61,7 @@ const Register = () => {
                   type="tel"
                   placeholder="Enter your phone number"
                   aria-label="Phone Number"
+                  onChange={(e) => setPhone(e.target.value)}
                 />
               </InputGroup>
 
@@ -46,6 +71,7 @@ const Register = () => {
                   type="number"
                   placeholder="Enter your age"
                   aria-label="Age"
+                  onChange={(e) => setAge(e.target.value)}
                 />
               </InputGroup>
 
@@ -55,6 +81,7 @@ const Register = () => {
                   type="email"
                   placeholder="Enter your email"
                   aria-label="Email"
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </InputGroup>
 
@@ -64,6 +91,7 @@ const Register = () => {
                   type={showPassword ? 'text' : 'password'}
                   placeholder="Enter your password"
                   aria-label="Password"
+                  onChange={(e) => setPassword(e.target.value)}
                 />
                 <Button 
                   variant="outline-secondary" 
@@ -73,22 +101,7 @@ const Register = () => {
                 </Button>
               </InputGroup>
 
-              <InputGroup size="lg" className="mb-3">
-                <InputGroup.Text style={{ width: '180px' }}>Verify Password</InputGroup.Text>
-                <Form.Control
-                  type={showConfirmPassword ? 'text' : 'password'}
-                  placeholder="Re-enter your password"
-                  aria-label="Verify Password"
-                />
-                <Button 
-                  variant="outline-secondary" 
-                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                >
-                  {showConfirmPassword ? 'Hide' : 'Show'}
-                </Button>
-              </InputGroup>
-
-              <Button variant="primary" type="submit" className="w-100" size="lg">
+              <Button variant="primary" className="w-100" size="lg" onClick={handleClick}>
                 Register
               </Button>
             </Form>
@@ -100,3 +113,21 @@ const Register = () => {
 }
 
 export default Register;
+
+
+// {userName: "Ayoub", email: "ayoubabderrahmen5@gmail.comm", password: "123ayoub123", age: "22",…}
+// age
+// : 
+// "22"
+// email
+// : 
+// "ayoubabderrahmen5@gmail.comm"
+// password
+// : 
+// "123ayoub123"
+// phone
+// : 
+// "12345678"
+// userName
+// : 
+// "Ayoub"
